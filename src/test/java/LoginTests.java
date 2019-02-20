@@ -22,6 +22,7 @@ public class LoginTests {
     public void afterMethod() {
         driver.quit();
     }*/
+    
 
     @Test(priority = 1)
     public void successfulLoginTest() {
