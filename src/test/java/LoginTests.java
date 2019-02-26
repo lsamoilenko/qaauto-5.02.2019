@@ -32,7 +32,7 @@ public class LoginTests {
                 {" milesla@i.ua ","Qwerty123"}
         };
     }
-    @Test(dataProvider = "ValidDataProvider", priority = 1)
+    @Test(dataProvider = "ValidDataProvider")
     public void successfulLoginTest(String userEmail, String userPassword) {
         LandingPage landingPage = new LandingPage(driver);
         Assert.assertTrue(landingPage.isPageloaded(),"Landing page is not loaded.");
@@ -41,5 +41,30 @@ public class LoginTests {
 
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
+    }
+
+
+    @DataProvider
+    public Object[][] InvalidDataProvider() {
+        return new Object[][]{
+                {"milesla@i.ua","0","", "Hmm, that's not the right password. Please try again or request a new one."},
+                {"!@#$%^&*()","1","Be sure to include \"+\" and your country code.", ""},
+                {"+-","2","Please enter a valid email address.", ""}
+        };
+        }
+
+    @Test(dataProvider = "InvalidDataProvider")
+
+    public void negativLoginTest(String userEmail, String userPassword, String emailValidationMessage, String passwordValidationMessage) {
+        LandingPage landingPage = new LandingPage(driver);
+        Assert.assertTrue(landingPage.isPageloaded(), "Landing page is not loaded.");
+
+        landingPage.login(userEmail, userPassword);
+
+        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
+       Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login submit page is not loaded.");
+
+        Assert.assertEquals(loginSubmitPage.wrongEmailMessage.getText(), emailValidationMessage, "Invalid login");
+        Assert.assertEquals(loginSubmitPage.wrongPasswordMessage.getText(), passwordValidationMessage, "Invalid password");
     }
 }

@@ -5,8 +5,10 @@ import org.openqa.selenium.WebElement;
 public class LoginSubmitPage {
         WebDriver driver;
 
-        WebElement wrongPasswordMessage;
         WebElement loginSubmitPage;
+        WebElement wrongEmailMessage;
+        WebElement wrongPasswordMessage;
+
 
         public LoginSubmitPage(WebDriver driver) {
             this.driver = driver;
@@ -14,8 +16,17 @@ public class LoginSubmitPage {
         }
 
         public void initElements(){
-            wrongPasswordMessage = driver.findElement(By.xpath("//div[@id='error-for-password']"));
             loginSubmitPage = driver.findElement(By.xpath("//main[@class='app__content']"));
+            wrongEmailMessage = driver.findElement(By.xpath("//div[@id='error-for-username']"));
+            wrongPasswordMessage = driver.findElement(By.xpath("//div[@id='error-for-password']"));
         }
+
+        public boolean isPageLoaded() {
+        return driver.getCurrentUrl().contains("login-submit")
+               && loginSubmitPage.isDisplayed()
+                && wrongEmailMessage.isDisplayed()
+                || wrongPasswordMessage.isDisplayed();
+        }
+
 
 }
