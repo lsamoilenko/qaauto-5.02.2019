@@ -38,7 +38,9 @@ public class LoginTests {
     public void successfulLoginTest(String userEmail, String userPassword) {
         Assert.assertTrue(landingPage.isPageloaded(),"Landing page is not loaded.");
 
-        HomePage homePage=landingPage.login(userEmail, userPassword);
+        HomePage homePage=landingPage.login(userEmail, userPassword, HomePage.class);
+
+        //HomePage homePage=landingPage.login(userEmail, userPassword);
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
     }
 
@@ -58,7 +60,9 @@ public class LoginTests {
 
         Assert.assertTrue(landingPage.isPageloaded(), "Landing page is not loaded.");
 
-        LoginSubmitPage loginSubmitPage = landingPage.loginToLoginSubmit(userEmail, userPassword);
+        LoginSubmitPage loginSubmitPage = landingPage.login(userEmail, userPassword, LoginSubmitPage.class);
+
+        //LoginSubmitPage loginSubmitPage = landingPage.loginToLoginSubmit(userEmail, userPassword);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login submit page is not loaded.");
 
         Assert.assertEquals(loginSubmitPage.getUserEmailValidationText(), emailValidationMessage, "userEmail validation message text is wrong");

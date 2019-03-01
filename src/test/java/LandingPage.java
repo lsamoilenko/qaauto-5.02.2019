@@ -21,7 +21,14 @@ public class LandingPage {
         PageFactory.initElements(driver, this);//читаем из landing page
     }
 
-    public HomePage login(String userEmail, String userPassword){
+    public <T> T login(String user, String pw, Class<T> expectedPage){
+        userEmailField.sendKeys(user);
+        userPasswordField.sendKeys(pw);
+        signInButton.click();
+        return PageFactory.initElements(driver, expectedPage);
+    }
+
+ /*   public HomePage login(String userEmail, String userPassword){
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
@@ -34,7 +41,7 @@ public class LandingPage {
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
         return new LoginSubmitPage(driver);
-    }
+    }*/
 
     public boolean isPageloaded() {
         return signInButton.isDisplayed()
