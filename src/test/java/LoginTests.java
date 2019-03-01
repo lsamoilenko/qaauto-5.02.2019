@@ -29,17 +29,16 @@ public class LoginTests {
     @DataProvider
     public Object[][] ValidDataProvider() {
         return new Object[][]{
-                {"milesla@i.ua","Qwerty123"},
-                {"milesLA@i.ua","Qwerty123"},
-                {" milesla@i.ua ","Qwerty123"}
+                {"baddy@i.ua","Qwerty123"},
+                //{"baDDY@i.ua","Qwerty123"},
+               // {" baddy@i.ua ","Qwerty123"}
         };
     }
     @Test(dataProvider = "ValidDataProvider")
     public void successfulLoginTest(String userEmail, String userPassword) {
         Assert.assertTrue(landingPage.isPageloaded(),"Landing page is not loaded.");
 
-        landingPage.login(userEmail, userPassword);
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage=landingPage.login(userEmail, userPassword);
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
     }
 
@@ -47,7 +46,7 @@ public class LoginTests {
     @DataProvider
     public Object[][] invalidData() {
         return new Object[][]{
-                {"milesla@i.ua","0","", "Hmm, that's not the right password. Please try again or request a new one."},
+                {"baddy@i.ua","0","", "Hmm, that's not the right password. Please try again or request a new one."},
                 {"!@#$%^&*()","1","Be sure to include \"+\" and your country code.", ""},
                 {"+-","2","Please enter a valid email address.", ""}
         };
@@ -59,10 +58,8 @@ public class LoginTests {
 
         Assert.assertTrue(landingPage.isPageloaded(), "Landing page is not loaded.");
 
-        landingPage.login(userEmail, userPassword);
-
-        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
-       Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login submit page is not loaded.");
+        LoginSubmitPage loginSubmitPage = landingPage.loginToLoginSubmit(userEmail, userPassword);
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login submit page is not loaded.");
 
         Assert.assertEquals(loginSubmitPage.getUserEmailValidationText(), emailValidationMessage, "userEmail validation message text is wrong");
         Assert.assertEquals(loginSubmitPage.getUserPasswordValidationText(), passwordValidationMessage,
