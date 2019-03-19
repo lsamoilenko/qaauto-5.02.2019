@@ -1,30 +1,8 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class LoginTests {
-
-    WebDriver driver;
-    LandingPage landingPage;
-
-    @BeforeMethod
-    public void beforeMethod() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\samoilenko_l\\IdeaProjects\\qaauto-5.02.2019\\chromedriver.exe");
-        driver = new ChromeDriver();//запуск приложения chromedriver, открывется новое окно браузера
-        driver.get("http://www.linkedin.com");
-        landingPage = new LandingPage(driver);
-    }
-
-    @AfterMethod
-    public void afterMethod() {
-        driver.quit();
-    }
+public class LoginTests extends BaseTest{
 
     @DataProvider
     public Object[][] ValidDataProvider() {
@@ -38,9 +16,8 @@ public class LoginTests {
     public void successfulLoginTest(String userEmail, String userPassword) {
         Assert.assertTrue(landingPage.isPageloaded(),"Landing page is not loaded.");
 
-        HomePage homePage=landingPage.login(userEmail, userPassword, HomePage.class);
+        HomePage homePage=landingPage.login(userEmail, userPassword, HomePage.class);//pattern
 
-        //HomePage homePage=landingPage.login(userEmail, userPassword);
         Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
     }
 
@@ -49,8 +26,8 @@ public class LoginTests {
     public Object[][] invalidData() {
         return new Object[][]{
                 {"baddy@i.ua","0","", "Hmm, that's not the right password. Please try again or request a new one."},
-                {"!@#$%^&*()","1","Be sure to include \"+\" and your country code.", ""},
-                {"+-","2","Please enter a valid email address.", ""}
+                //{"!@#$%^&*()","1","Be sure to include \"+\" and your country code.", ""},
+                //{"+-","2","Please enter a valid email address.", ""}
         };
         }
 
@@ -60,7 +37,7 @@ public class LoginTests {
 
         Assert.assertTrue(landingPage.isPageloaded(), "Landing page is not loaded.");
 
-        LoginSubmitPage loginSubmitPage = landingPage.login(userEmail, userPassword, LoginSubmitPage.class);
+        LoginSubmitPage loginSubmitPage = landingPage.login(userEmail, userPassword);
 
         //LoginSubmitPage loginSubmitPage = landingPage.loginToLoginSubmit(userEmail, userPassword);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login submit page is not loaded.");
