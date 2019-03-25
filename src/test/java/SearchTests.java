@@ -2,29 +2,27 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.util.List;
 
-public class SearchTests extends BaseTest{
+public class SearchTests extends BaseTest {
+
+
     @Test
-    public void basicSearchTest(){
+    public void basicSearchTest() throws InterruptedException {
         String searchTerm = "HR";
+        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded");
 
-        Assert.assertTrue(landingPage.isPageloaded(),"Landing page is not loaded.");
-
-        HomePage homePage = landingPage.login("baddy@i.ua","Qwerty123", HomePage.class);//pattern
-        Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded.");
+        HomePage homePage = landingPage.login("kir00plast@gmail.com", "Qwerty123");
+        Assert.assertTrue(homePage.isPageLoaded(), "Home page is not loaded");
 
         SearchPage searchPage = homePage.search("HR");
-        Assert.assertTrue(searchPage.isPageLoaded(), "Search page is not loaded.");
+        Thread.sleep(5000);
+        Assert.assertTrue(searchPage.isPageLoaded(), "Search page is not loaded");
+        Assert.assertEquals(searchPage.getSearchResulCount(), 10, "Search result count is wrong");
 
-        Assert.assertEquals(searchPage.getSearchResultCount(),10, "Search results count is wrong.");
-
-        List<String> searchResultsList = searchPage.getSearchResultsList();
-
-        for(String searchResult : searchResultsList) {
-            Assert.assertTrue(searchResult.contains(searchTerm),
-                    "pls write this  msg"
-            );
+        List<String> SearchResultList = searchPage.getSearchResultLists();
+        for (String searchResult : SearchResultList){
+            Assert.assertTrue(searchResult.contains(searchTerm),"Search term :  "+searchTerm+" not found in: \n"+searchResult);
         }
-
     }
 
 }
+

@@ -7,14 +7,14 @@ public class LoginTests extends BaseTest{
     @DataProvider
     public Object[][] ValidDataProvider() {
         return new Object[][]{
-                {"baddy@i.ua","Qwerty123"},
+                {"kir00plast@gmail.com","Qwerty123"},
                 //{"baDDY@i.ua","Qwerty123"},
                // {" baddy@i.ua ","Qwerty123"}
         };
     }
     @Test(dataProvider = "ValidDataProvider")
     public void successfulLoginTest(String userEmail, String userPassword) {
-        Assert.assertTrue(landingPage.isPageloaded(),"Landing page is not loaded.");
+        Assert.assertTrue(landingPage.isPageLoaded(),"Landing page is not loaded.");
 
         HomePage homePage=landingPage.login(userEmail, userPassword, HomePage.class);//pattern
 
@@ -35,7 +35,7 @@ public class LoginTests extends BaseTest{
 
     public void negativLoginTest(String userEmail, String userPassword, String emailValidationMessage, String passwordValidationMessage) {
 
-        Assert.assertTrue(landingPage.isPageloaded(), "Landing page is not loaded.");
+        Assert.assertTrue(landingPage.isPageLoaded(), "Landing page is not loaded.");
 
         LoginSubmitPage loginSubmitPage = landingPage.login(userEmail, userPassword);
 

@@ -40,21 +40,8 @@ public class LandingPage {
         return PageFactory.initElements(driver, expectedPage);
     }
 
- /*   public HomePage login(String userEmail, String userPassword){
-        userEmailField.sendKeys(userEmail);
-        userPasswordField.sendKeys(userPassword);
-        signInButton.click();
-        return new HomePage(driver);
-    }
 
-    public LoginSubmitPage loginToLoginSubmit(String userEmail, String userPassword) {
-        userEmailField.sendKeys(userEmail);
-        userPasswordField.sendKeys(userPassword);
-        signInButton.click();
-        return new LoginSubmitPage(driver);
-    }*/
-
-    public boolean isPageloaded() {
+    public boolean isPageLoaded() {
         return signInButton.isDisplayed()
                 && driver.getCurrentUrl().equals("https://www.linkedin.com/")
                 && driver.getTitle().equals("LinkedIn: Log In or Sign Up");
